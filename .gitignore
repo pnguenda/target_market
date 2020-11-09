@@ -1,3 +1,6 @@
+resources/brick_siding_combo_data/*
+resources/data_for_training_01/*
+
 .DS_Store
 config.py
 .ipynb_checkpoints
