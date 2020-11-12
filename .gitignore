@@ -6,6 +6,7 @@ resources/data_for_training_02/*
 resources/data_for_training_03/*
 resources/data_for_training_04/*
 resources/data_for_training_05/*
+resources/data_for_training_06/*
 
 .DS_Store
 config.py
