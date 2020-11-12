@@ -16,8 +16,8 @@
     <meta http-equiv="X-UA-Compatible" content = "IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Brick House Image Processing</title>
+        <link rel="stylesheet" href="./static/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css" type="text/css">
   </head>
 
 
@@ -25,6 +25,7 @@
 
 
     <!-- Navigation Bar -->
+
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
       <a class="navbar-brand" href="/">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,9 +56,14 @@
 
       <div class="row">
 
-        <div class="col-4">
+        <!-- Row 1, Column 1-->
+
+        <div class="col-4"> 
+         
           <h3 class="display-6" ALIGN="left">Model Characteristics</h3>
           <hr class="my-4">
+
+           <!-- Table: Model Characteristics-->
                 
           <table border="1" class="dataframe table-striped">
             <thead>
@@ -145,17 +151,24 @@
               </tr>                                
             </tbody>
           </table>
+
           <p>Total parameters: 2,562,395<br>
           Trainable parameters: 2,562,395<br>
           Non-trainable parameters: 0</p>
+
         </div>
 
-        <div class="col-md-4">
+        
+        <!-- Row 1, Column 2 -->
+
+        <div class="col-md-4"> 
           <h3 class="display-5" ALIGN="left">Model Accuracy</h3>
           <hr class="my-4">
           <p><strong>Test accuracy: 84%</strong></p>
           <img src="static/images/model_accuracy.png" alt="Current Model"  width="500" height="375" ALIGN="left"/>
         </div>
+
+        <!-- Row 1, Column 3 -->
 
         <div class="col-md-4">
           <h3 class="display-5" ALIGN="left">Model Loss</h3>
@@ -167,21 +180,40 @@
 
       <div class="row">
 
+
+        <!-- Row 2, Column 1 -->
+
         <!-- Upload Image Form -->
 
         <div class="col-4">
 
-          <h5>Upload your image</h5>
-
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Upload</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01">
-              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
+          
+          <div class="btn btn-outline-white btn-rounded waves-effect btn-sm float-left">
+            <p><input type="file" multiple  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+            <p><label for="file" style="cursor: pointer;">Upload Image</label></p>
+            <p><img id="output" width="200" /></p>
           </div>
+
+          <!-- <h5>Upload one or more images (jpg format).</h5> -->
+
+          <!-- Start Card-->
+          <div class="card indigo text-center z-depth-2 light-version py-4 px-5">
+
+            <hr class="w-100 my-4">
+
+            <form class="md-form" action="#">
+              <div class="file-field">
+                <div class="btn btn-outline-white btn-rounded waves-effect btn-sm float-left">
+                  <span>Choose files<i class="fas fa-cloud-upload-alt ml-3" aria-hidden="true"></i></span>
+                  <input type="file" multiple accept="image/*" name="image" id="file"  onchange="loadFile(event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate text-white" type="text" placeholder="Upload one or more files">
+                </div>
+              </div>
+            </form>
+          </div>
+          <!--/End Card -->
           
           <h5>Choose type</h5>
 
@@ -196,21 +228,25 @@
               <option value="3">Three</option>
             </select>
           </div>
+
         </div>
 
-        <div class="col-3">
+        <!-- Row 2, Column 2 -->
+
+        <div class="col-4">
           <div class="item">
           <h5>[Display Uploaded Image]</h5>
           </div>
         </div>
 
-        <div class="col-3">
+
+        <!-- Row 2, Column 3 -->
+
+        <div class="col-4">
           <div class="item">
           <h5>[Display model predictions]</h5>
           </div>
         </div>
-
-
 
       </div>
     </div>
@@ -218,7 +254,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  
+    <script>
+      var loadFile = function(event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+      };
+      </script>
   </body>
 
 </html>

@@ -1,0 +1,1 @@
+Note: To run this website you have to run python app.py in the directory of this readme.
