@@ -14,7 +14,8 @@ import google_streetview.api
 import time
 import glob
 import streetview
-import itertools 
+import itertools
+from config import gkey
 
 
 model = Sequential()
