@@ -9,17 +9,9 @@
         <center>
             <div class='cont'>
                 
-            
-            {% if data[1] > 0.50 %}
-            <h1>I think its a dog</h1>
-            
-            {%else%}
-            <h1> looks like a cat </h1>
-            
-            {%endif%}
-
+            {{data}}
         </div>
-            <h1>acc<br> cat: <span>{{data[0]}}</span> <br>dog: <span>{{data[1]}}</span><br> </h1>
+            <h1>acc<br> cat: <span>{{data}}</span> <br>dog: <span>{{data}}</span><br> </h1>
             
             <img src="{{url_for('load_img')}}" alt='img'>
             <a href="/" class='btn'>go back</a>
