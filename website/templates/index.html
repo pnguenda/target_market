@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <style>
+      body {background-color: blue;}
+      h1   {color: rgb(53, 14, 124);}
+      p    {color: black; font-size: small;}
+      .item { 
+    padding: 150px;
+   border: 1px solid black;
+    }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content = "IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brick House Image Processing</title>
+        <link rel="stylesheet" href="./static/css/indexStyle.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </head>
+
+
+  <body>
+
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+      <a class="navbar-brand" href="/">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarNavDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Explore
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarNavDropdown">
+              <a class="dropdown-item" href="/uploadImage">Upload Image</a>
+              <a class="dropdown-item" href="/page2">[page2]</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/archive">Archive<a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+    <!-- Body of the Website -->
+
+    <div class="container-fluid">
+
+      <div class="row">
+
+        <!-- Row 1, Column 1-->
+
+        <div class="col-4"> 
+         
+          <h3 class="display-6" ALIGN="left">Model Characteristics</h3>
+          <hr class="my-4">
+
+           <!-- Table: Model Characteristics-->
+                
+          <table border="1" class="dataframe table-striped">
+            <thead>
+              <tr style="text-align: left;">
+                <th>Layer</th>
+                <th>Output Shape</th>
+                <th>Number of Parameters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>conv2d (Conv2D)</td>
+                <td>(None, 400, 400, 4)</td>
+                <td>52</td>
+              </tr>
+              <tr>
+                <td>max_pooling2d (MaxPooling2D)</td>
+                <td>(None, 200, 200, 4)</td>
+                <td>0</td>
+              </tr>           
+              <tr>
+                  <td>conv2d_1(Conv2D)</td>
+                  <td>(None,200,200,8)</td>
+                  <td>136</td>
+              </tr>
+              <tr>
+                  <td>max_pooling2d_1 (MaxPooling2</td>
+                  <td>(None, 100, 100, 8)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>dropout (Dropout)</td>
+                  <td>(None, 100, 100, 8)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>conv2d_2 (Conv2D)</td>
+                  <td>(None, 100, 100, 12)</td>
+                  <td>396</td>
+              </tr>
+              <tr>
+                  <td>max_pooling2d_2 (MaxPooling2)</td>
+                  <td>(None, 50, 50, 12)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>dropout_1 (Dropout)</td>
+                  <td>(None, 50, 50, 12)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>conv2d_3 (Conv2D)</td>
+                  <td>(None, 50, 50, 16)</td>
+                  <td>784</td>
+              </tr>
+              <tr>
+                  <td>max_pooling2d_3 (MaxPooling2)</td>
+                  <td>(None, 25, 25, 16)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>dropout_2 (Dropout)</td>
+                  <td>(None, 25, 25, 16)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>flatten (Flatten)</td>
+                  <td>(None, 1000)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>dense (Dense)</td>
+                  <td>(None, 256)</td>
+                  <td>2,560,256</td>
+              </tr>
+              <tr>
+                  <td>dropout_3 (Dropout)</td>
+                  <td>(None, 256)</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>dense_1 (Dense)</td>
+                  <td>(None, 3)</td>
+                  <td>771</td>
+              </tr>                                
+            </tbody>
+          </table>
+
+          <p>Total parameters: 2,562,395<br>
+          Trainable parameters: 2,562,395<br>
+          Non-trainable parameters: 0</p>
+
+        </div>
+
+        
+        <!-- Row 1, Column 2 -->
+
+        <div class="col-md-4"> 
+          <h3 class="display-5" ALIGN="left">Model Accuracy</h3>
+          <hr class="my-4">
+          <p><strong>Test accuracy: 84%</strong></p>
+          <img src="static/images/model_accuracy.png" alt="Current Model"  width="500" height="375" ALIGN="left"/>
+        </div>
+
+        <!-- Row 1, Column 3 -->
+
+        <div class="col-md-4">
+          <h3 class="display-5" ALIGN="left">Model Loss</h3>
+          <hr class="my-4">
+          <p><strong>Test accuracy: 84%</strong></p>
+          <img src="static/images/model_loss.png" alt="Current Model"  width="500" height="375" ALIGN="left"/>
+        </div>
+      </div>
+
+      <div class="row">
+
+
+        <!-- Row 2, Column 1 -->
+
+        <!-- Upload Image Form -->
+
+        <div class="col-4">
+
+          
+          <div class="btn btn-outline-white btn-rounded waves-effect btn-sm float-left">
+            <p><input type="file" multiple  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+            <p><label for="file" style="cursor: pointer;">Upload Image</label></p>
+            <p><img id="output" width="200" /></p>
+          </div>
+
+          <!-- <h5>Upload one or more images (jpg format).</h5> -->
+
+          <!-- Start Card-->
+          <div class="card indigo text-center z-depth-2 light-version py-4 px-5">
+
+            <hr class="w-100 my-4">
+
+            <form class="md-form" action="#">
+              <div class="file-field">
+                <div class="btn btn-outline-white btn-rounded waves-effect btn-sm float-left">
+                  <span>Choose files<i class="fas fa-cloud-upload-alt ml-3" aria-hidden="true"></i></span>
+                  <input type="file" multiple accept="image/*" name="image" id="file"  onchange="loadFile(event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate text-white" type="text" placeholder="Upload one or more files">
+                </div>
+              </div>
+            </form>
+          </div>
+          <!--/End Card -->
+          
+          <h5>Choose type</h5>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+              <option selected>Choose...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Row 2, Column 2 -->
+
+        <div class="col-4">
+          <div class="item">
+          <h5>[Display Uploaded Image]</h5>
+          </div>
+        </div>
+
+
+        <!-- Row 2, Column 3 -->
+
+        <div class="col-4">
+          <div class="item">
+          <h5>[Display model predictions]</h5>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+      var loadFile = function(event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+      };
+      </script>
+  </body>
+
+</html>

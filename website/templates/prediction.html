@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <link href="/static/css/uploadImageStyle.css" rel="stylesheet">
+    </head>
+    <body>
+        <center>
+            <div class='cont'>
+                
+            {{data}}
+        </div>
+            <h1>acc<br> cat: <span>{{data}}</span> <br>dog: <span>{{data}}</span><br> </h1>
+            
+            <img src="{{url_for('load_img')}}" alt='img'>
+            <a href="/" class='btn'>go back</a>
+
+        </center>
+        
+    </body>
+</html>
