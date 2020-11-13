@@ -6,6 +6,16 @@ from tensorflow.keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, BatchN
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage.transform import resize
+#For API CALL ADDRESS SUBMIT
+import urllib.request
+import json
+# Import google_streetview for the api module
+import google_streetview.api
+import time
+import glob
+import streetview
+import itertools 
+
 
 model = Sequential()
 
@@ -54,7 +64,53 @@ def uploadImage():
 @app.route("/send", methods=["GET", "POST"])
 def send():
     if request.method == "POST":
-        address = request.form["address"]
+        address = request.form["address"].to_numpy()
+        
+        np.savetxt("static/data/raw/user_address_submit.txt", address, fmt='%5s')
+
+        #API CALL FOR USER ADDRESS SUBMIT IN FORM
+
+        #this is the first part of the streetview, url up to the address, this url will return a 600x600px image
+        #pre="https://maps.googleapis.com/maps/api/streetview?size=600x600&amp;location="
+        pre="https://maps.googleapis.com/maps/api/streetview?size=600x600&location="
+        
+        #this is the second part of the streetview url, the text variable below, includes the path to a text file containing one address per line
+        #the addresses in this text file will complete the URL needed to return a streetview image and provide the filename of each streetview image
+        text="static/data/raw/sample_address_list.txt"
+        
+        #this is the third part of the url, needed after the address
+        #this is my API key, please replace the one below with your own (google 'google streetview api key'), thanks!
+        suf=f"&key={gkey}&fov=60"
+        
+        #this is the directory that will store the streetview images
+        #this directory will be created if not present
+
+        #**** DAVE, WHAT DIRECTORY SHOULD THIS GO? ***
+        dir=r"static/data/raw/locs/"
+        
+        #checks if the dir variable (output path) above exists and creates it if it does not
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        
+        #opens the address list text file (from the 'text' variable defined above) in read mode ("r")
+        with open(text,"r") as text_file:
+        #the variable 'lines' below creates a list of each address line in the source 'text' file
+        address_choice = [line.rstrip('\n') for line in open(text)]
+
+            
+        ln = address_choice[i].replace(" " , "+")
+
+        # creates the url that will be passed to the url reader, this creates the full, valid, url that will return a google streetview image for each address in the address text file
+        URL = pre+ln+suf
+        #     print("URL FOR STREETVIEW IMAGE:\n"+URL)
+            #creates the filename needed to save each address's streetview image locally
+        filename = os.path.join(dir, "_" + str(ln)+".jpg")
+        #     print("OUTPUT FILENAME:\n"+filename)
+        #you can run this up to this line in the python command line to see what each step does
+        #final step, fetches and saves the streetview image for each address using the url created in the previous steps
+        urllib.request.urlretrieve(URL, filename)
+
+
         return redirect("/", code=302)
     return render_template("form.html")
 

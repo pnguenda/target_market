@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pet Form</title>
+    <title>Brick House Machine Learning Predictions</title>
 
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -25,16 +25,20 @@
     <body>
         <div class="container">
             <div class="jumbotron" style="text-align: center">
-                <h1>Pet Pal</h1>
-                <p>Enter your pet's details below!</p>
+                <h1>Brick House Prediction</h1>
+                <!-- <p>Enter an address below</p> -->
             </div>
             <div class="row">
                 <div class="col-md-offset-2 col-md-8">
-                    <form method="POST" action="/send" role="form", name="petform">
+                    <div><p><h1>Enter a residential address to return an image and ML prediction. 
+                    </h1></p>
+                   </div>
+                   <hr>
+                    <form method="POST" action="/send" role="form", name="address">
                         <div class="form-group">
-                            <label for="inputName">Pet Name</label>
-                            <input type="text" class="form-control" id="inputName" name="petName" placeholder="Name">
-                        </div>
+                            <label for="inputName">Address (please enter in the format given below)</label>
+                            <input type="text" class="form-control" id="inputName" name="petName" placeholder="2017 Grant St Evanston, Illinois 60201">
+                        <!-- </div>
                         <div class="form-group">
                             <label for="inputLat">Pet Location Lat</label>
                             <input type="text" class="form-control" id="inputLat" name="petLat" placeholder="Lat">
@@ -42,7 +46,7 @@
                         <div class="form-group">
                             <label for="inputLon">Pet Location Lon</label>
                             <input type="text" class="form-control" id="inputLon" name="petLon" placeholder="Lon">
-                        </div>
+                        </div> -->
                         <input type="submit" value="submit" class="btn btn-default">
                     </form>
                 </div>
