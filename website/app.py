@@ -10,6 +10,7 @@ from skimage.transform import resize
 import urllib.request
 import json
 # Import google_streetview for the api module
+import os
 import google_streetview.api
 import time
 import glob
@@ -62,32 +63,42 @@ def uploadImage():
 
 
 ###########address form###########
-@app.route("/send", methods=["GET", "POST"])
-def send():
+@app.route("/form", methods=["GET", "POST"])
+def form():
+
     if request.method == "POST":
-        address = request.form["address"].to_numpy()
-        
-        np.savetxt("static/data/raw/user_address_submit.txt", address, fmt='%5s')
-
         #API CALL FOR USER ADDRESS SUBMIT IN FORM
+        input_address = []
 
+        submit_address = request.form["address"]
+        input_address.append(submit_address)
+
+        time.sleep(1)
+
+        address = np.array(input_address)
+
+        np.savetxt("static/data/user_address_submit.txt", address, fmt='%5s')
+
+        time.sleep(1)
+
+        
         #this is the first part of the streetview, url up to the address, this url will return a 600x600px image
         #pre="https://maps.googleapis.com/maps/api/streetview?size=600x600&amp;location="
         pre="https://maps.googleapis.com/maps/api/streetview?size=600x600&location="
         
         #this is the second part of the streetview url, the text variable below, includes the path to a text file containing one address per line
         #the addresses in this text file will complete the URL needed to return a streetview image and provide the filename of each streetview image
-        text="static/data/raw/sample_address_list.txt"
+        text="static/data/user_address_submit.txt"
         
         #this is the third part of the url, needed after the address
-        #this is my API key, please replace the one below with your own (google 'google streetview api key'), thanks!
         suf=f"&key={gkey}&fov=60"
         
         #this is the directory that will store the streetview images
         #this directory will be created if not present
-
-        #**** DAVE, WHAT DIRECTORY SHOULD THIS GO? ***
-        dir=r"static/data/raw/locs/"
+        #_________________________________________
+        #**** DAVE, WHAT DIRECTORY SHOULD THE IMAGE GO SO IT CAN GET THE PREDICT FUNCTION? ***
+        dir=r"static/images/address_submit/"
+        #_________________________________________
         
         #checks if the dir variable (output path) above exists and creates it if it does not
         if not os.path.exists(dir):
@@ -95,25 +106,44 @@ def send():
         
         #opens the address list text file (from the 'text' variable defined above) in read mode ("r")
         with open(text,"r") as text_file:
-        #the variable 'lines' below creates a list of each address line in the source 'text' file
-        address_choice = [line.rstrip('\n') for line in open(text)]
+            #the variable 'lines' below creates a list of each address line in the source 'text' file
+            # address_choice = [line.rstrip('\n') for line in open(text)]
+            address_choice = text_file.readline().strip('\n')
 
+                
+            ln = address_choice.replace(" " , "+")
+
+            # creates the url that will be passed to the url reader, this creates the full, valid, url that will return a google streetview image for each address in the address text file
+            URL = pre+ln+suf
+            #     print("URL FOR STREETVIEW IMAGE:\n"+URL)
+                #creates the filename needed to save each address's streetview image locally
+            filename = os.path.join(dir, "_" + str(ln)+".jpg")
+            #     print("OUTPUT FILENAME:\n"+filename)
+            #you can run this up to this line in the python command line to see what each step does
+            #final step, fetches and saves the streetview image for each address using the url created in the previous steps
+            urllib.request.urlretrieve(URL, filename)
+
+            time.sleep(1)
+    
+    # add_image = plt.imread(f'static/images/address_submit/{ln}.jpg')
+    # add_resized_image = resize(add_image, (400,400,3))
+    # preds = model.predict(np.array([add_resized_image]))
+    # # COUNT += 1
             
-        ln = address_choice[i].replace(" " , "+")
-
-        # creates the url that will be passed to the url reader, this creates the full, valid, url that will return a google streetview image for each address in the address text file
-        URL = pre+ln+suf
-        #     print("URL FOR STREETVIEW IMAGE:\n"+URL)
-            #creates the filename needed to save each address's streetview image locally
-        filename = os.path.join(dir, "_" + str(ln)+".jpg")
-        #     print("OUTPUT FILENAME:\n"+filename)
-        #you can run this up to this line in the python command line to see what each step does
-        #final step, fetches and saves the streetview image for each address using the url created in the previous steps
-        urllib.request.urlretrieve(URL, filename)
+            # return redirect("/", code=302)
+        
+    
+        
 
 
-        return redirect("/", code=302)
+
+        
     return render_template("form.html")
+
+@app.route('/form')
+def add_load_img():
+    global COUNT
+    return send_from_directory(f"static/images/address_submit/{ln}.jpg")
 
 @app.route('/prediction', methods=['POST'])
 def prediction():

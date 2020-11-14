@@ -34,10 +34,10 @@
                     </h1></p>
                    </div>
                    <hr>
-                    <form method="POST" action="/send" role="form", name="address">
+                    <form method="POST" action="/form" role="form", name="address">
                         <div class="form-group">
                             <label for="inputName">Address (please enter in the format given below)</label>
-                            <input type="text" class="form-control" id="inputName" name="petName" placeholder="2017 Grant St Evanston, Illinois 60201">
+                            <input type="text" class="form-control" id="inputName" name="address" placeholder="2017 Grant St Evanston, Illinois 60201">
                         <!-- </div>
                         <div class="form-group">
                             <label for="inputLat">Pet Location Lat</label>
@@ -49,6 +49,22 @@
                         </div> -->
                         <input type="submit" value="submit" class="btn btn-default">
                     </form>
+                </div>
+                <div class="col-md-offset-2 col-md-8">
+                    <div><p><h1>Prediction Result 
+                    </h1></p>
+                   </div>
+                   <hr>
+                    <div>
+                        <div class='cont'>
+                
+                            {{data}}
+                            </div>
+                            <h1>acc<br> cat: <span>{{data}}</span> <br>dog: <span>{{data}}</span><br> </h1>
+                            
+                            <img src="{{url_for('add_load_img')}}" alt='img'>
+                            <a href="/" class='btn'>go back</a>
+                    </div>
                 </div>
             </div>
 
