@@ -51,7 +51,7 @@ model.load_weights('static/model/final_model.hdf5')
 
 COUNT = 0
 FORM_COUNT = 0
-IS_ADDRESS = True
+IS_ADDRESS = None
 ln = ''
 
 app = Flask(__name__)
@@ -73,11 +73,13 @@ def main():
             # return model predictions from user address input
             data, FORM_COUNT = address_form(model, submit_address, FORM_COUNT)
 
+            IS_ADDRESS = True
+
         else:
 
             request_files = request.files['image']
 
-            # return model predictions from user address input
+            # return model predictions from uploaded image
             data, COUNT = image_form(model, request_files, COUNT)
 
             IS_ADDRESS = False
@@ -89,9 +91,14 @@ def main():
     return render_template('index.html', data=data)
 
 
-###########displays image from address input##########
-@app.route('/address_load_img')
-def address_load_img():
+###########displays image on website##########
+
+#Note: Default image when page loads is "example.jpg" in static/images/upload_images/.
+#If user uploads image onto website, uploaded image is renamed f"{COUNT-1}.jpg" and is saved to, and then retrieved from, static/images/upload_images/ and is displayed on website along with model results.
+#If user types address, uploaded image is renamed f"{FORM_COUNT-1}.jpg" and is saved to, and then retrieved from, static/images/address_submit/ and is displayed on website along with model results.
+
+@app.route('/load_image')
+def load_image():
     global FORM_COUNT
     global IS_ADDRESS
 
@@ -102,12 +109,10 @@ def address_load_img():
     elif IS_ADDRESS == False:
 
         return send_from_directory("static/images/upload_images/", f"{COUNT-1}.jpg")
+    
+    else:
 
-# ###########displays image from uploaded image##########
-# @app.route('/image_load_img')
-# def image_load_img():
-#     global COUNT
-#     return send_from_directory('static/images/upload_images/', f"{COUNT-1}.jpg")
+        return send_from_directory("static/images/upload_images/", "example.jpg")
 
 if __name__ == '__main__':
     app.run(debug=True)
