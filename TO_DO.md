@@ -1,14 +1,14 @@
 # TO DO LIST
 
 ## Done ##
-~~ Inititial draft of model ~~
-~~ Initial draft of website ~~
-~~ Initial draft of address form to produce classifications based on model ~~
-~~ Initial draft of image form that produces classifications based on model ~~
-~~ Initial draft of model smartener
-(saves newly-uploaded images to separate folders based on classification;
-when reaches 100 in a category automatically runs model;
-updates model on website) ~~
+~~Inititial draft of model~~
+~~Initial draft of website~~
+~~Initial draft of address form to produce classifications based on model~~
+~~Initial draft of image form that produces classifications based on model~~
+~~Initial draft of model smartener~~
+~~(saves newly-uploaded images to separate folders based on classification;~~
+~~when reaches 100 in a category automatically runs model;~~
+~~updates model on website)~~
 
 
 ## Need to Do ##
