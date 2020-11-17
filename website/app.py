@@ -89,7 +89,7 @@ def main():
 
             submit_address = request.form["address"]
             # return model predictions from user address input
-            data, predictions, best_guess_category, FORM_COUNT = address_form(model, submit_address, FORM_COUNT)
+            data, predictions, best_guess_category, FORM_COUNT, address = address_form(model, submit_address, FORM_COUNT)
             
             image_upload_path = f'static/images/address_submit/{FORM_COUNT-1}.jpg'
 
@@ -117,14 +117,28 @@ def main():
 
         # save file in new_images_database. File name is determined by:
         #   category of the highest prediction percentage, followed by prediction percentage,
-        #   and time stamp (year, month, day, hour, second)
+        #   and time stamp (year, month, day, hour, second), and if the file was from an address (API call)
+        #   the address is included at the end
 
         current_time = f'{datetime.now().year}{datetime.now().month}{datetime.now().day}{datetime.now().hour}{datetime.now().second}'
         
         prediction = str(int(round(100*max(predictions),0)))
-        new_image_name = f'{best_guess_category}_{prediction}_{current_time}'
-        new_image_path = f'new_images_database/{best_guess_category}/{new_image_name}.jpg'
-        copyfile(image_upload_path, new_image_path)
+
+        code = {'Brick': '10_', 'Siding': '20_', 'Unknown': '00_'}
+
+        new_image_name = f'{code[best_guess_category]}{best_guess_category}_{prediction}_{current_time}'
+        
+        new_image_path = f'new_images_database/{best_guess_category}/{new_image_name}'
+
+        if IS_ADDRESS == True:
+
+            address = address[0].replace(',', '').replace('.', '').replace(' ', '_')
+
+            new_image_path = new_image_path + '_' + address
+
+        new_image_path_with_extension = new_image_path + '.jpg'
+        
+        copyfile(image_upload_path, new_image_path_with_extension)
 
     else:
 

@@ -48,6 +48,7 @@ def address_form(model, submit_address, FORM_COUNT):
 
     address = np.array(input_address)
 
+    # example output: ['37061 Lakeshore Blvd Eastlake, OH 44095']
     np.savetxt("static/data/user_address_submit.txt", address, fmt='%5s')
 
     # time.sleep(1)
@@ -85,7 +86,7 @@ def address_form(model, submit_address, FORM_COUNT):
         #final step, fetches and saves the streetview image for each address using the url created in the previous steps
         urllib.request.urlretrieve(URL, filename)
         
-        time.sleep(1)
+        # time.sleep(1)
 
         renamed_image = f"static/images/address_submit/{FORM_COUNT}.jpg"
 
@@ -113,11 +114,10 @@ def address_form(model, submit_address, FORM_COUNT):
 
     for i, prediction in enumerate(predictions):
         data[classifications[i]] = f'{classifications[i]}: {round(100*prediction,0)}%'
-    print(data)
 
     FORM_COUNT += 1
     
-    return (data, predictions, best_guess_category, FORM_COUNT)
+    return (data, predictions, best_guess_category, FORM_COUNT, address)
 
 
 
