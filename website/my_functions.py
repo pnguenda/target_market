@@ -34,8 +34,7 @@ from datetime import datetime
 
 ### ADDRESS INPUT ###
 ###########returns model predictions from user address input###########
-def address_form(model, submit_address, FORM_COUNT):
-    global ln
+def address_form(model, submit_address, ADDRESS_SUBMIT_COUNT):
 
     #API CALL FOR USER ADDRESS SUBMIT IN FORM
     input_address = []
@@ -88,14 +87,14 @@ def address_form(model, submit_address, FORM_COUNT):
         
         # time.sleep(1)
 
-        renamed_image = f"static/images/address_submit/{FORM_COUNT}.jpg"
+        renamed_image = f"static/images/address_submit/{ADDRESS_SUBMIT_COUNT}.jpg"
 
         if os.path.exists(renamed_image):
             os.remove(renamed_image)
         os.rename(filename, renamed_image)
         
     # prepare image for model prediction by first resizing to be consistent with the model
-    image = plt.imread(f'static/images/address_submit/{FORM_COUNT}.jpg')
+    image = plt.imread(f'static/images/address_submit/{ADDRESS_SUBMIT_COUNT}.jpg')
     resized_image = resize(image, (400,400,3))
     
     # preds = model.predict(np.array([resized_image]))
@@ -114,17 +113,15 @@ def address_form(model, submit_address, FORM_COUNT):
 
     for i, prediction in enumerate(predictions):
         data[classifications[i]] = f'{classifications[i]}: {round(100*prediction,0)}%'
-
-    FORM_COUNT += 1
-    
-    return (data, predictions, best_guess_category, FORM_COUNT, address)
+ 
+    return (data, predictions, best_guess_category, address)
 
 
 
 ### IMAGE INPUT ###
 ###########returns model predictions from user image upload###########
 
-def image_form(model, image, COUNT):
+def image_form(model, image):
 
     resized_image = resize(image, (400,400,3))
     data = {}
@@ -136,9 +133,5 @@ def image_form(model, image, COUNT):
     data['Best_guess'] = f'The model has identified {best_guess_category}.'
     for i, prediction in enumerate(predictions):
         data[classifications[i]] = f'{classifications[i]}: {round(100*prediction,0)}%'
-    
-    COUNT += 1
 
-    return (data, predictions, best_guess_category, COUNT)
-
-
+    return (data, predictions, best_guess_category)

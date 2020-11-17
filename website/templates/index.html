@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="static/css/style.css">
   </head>
 
   <body>
@@ -299,7 +299,7 @@
             Tuning the model
           </h3>
           <p>
-            Our model utilizes a convolutional neural network to learn and recognize brick homes. A convolutional neural network (CNN/ConvNet) learns weights and biases from an input image. CNNs have become dominant in various deep learning and computer vision tasks due to their ability to quickly learn spatial hierarchies.
+            Our model utilizes convolutional neural networks to learn and recognize brick homes. A convolutional neural network (CNN/ConvNet) learns weights and biases from an input image. CNNs have become dominant in various deep learning and computer vision tasks due to their ability to quickly learn spatial hierarchies.
           </p>
           <h3>Model Characteristics</h3>
           <hr class="my-4">
@@ -405,8 +405,18 @@
 
       <div class="row">
 
-        <div class="col-md-12">
-          <div><p><h1>Enter a residential address to return an image and ML prediction. </h1></p></div>
+        <hr>
+
+        <div><h3>Enter a residential address or upload an image to return a classification.</h3></div>
+        
+        <hr>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-4">
+
           <hr>
 
             <!-- /* Input Address form */ -->
@@ -415,43 +425,78 @@
             <div class="form-group">
                 <label for="inputName">Address (please enter in the format given below)</label>
                 <input type="text" class="form-control" id="inputName" name="address" placeholder="6257 N Legett Ave Chicago, Illinois 60646">
-                <input type="submit" id="form-1" value="Submit Address" class="btn btn-default">
+                <input type="submit" id="form-1" value="Submit Address" class="btn btn-default" style= "
+                background-color: #eceaf1;
+                color: black;
+                border: 2px solid black;
+                padding: none;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 10px;
+                font-family: Verdana;
+                border-radius: 8px">
             </div>
           </form>
-        </div>
-
-        <div>
-          <div><p><h1>Upload an image of a property. </h1></p></div>
+        
           <hr>
 
           <!-- /* Upload Image form */ -->
 
           <form method="POST" action="/" enctype="multipart/form-data">
               <div class="form-group">
-                  <input type="file" multiple name="image" class="btn btn-default"><br><br><br>
-                  <input type="submit" id="form-2" value="Submit Image" class="btn btn-default">
+                  <label for="inputName">Upload an image of a property.</label>
+                  <input type="file" multiple name="image" class="btn btn-default" ><br><br><br>
+                  <input type="submit" id="form-2" value="Submit Image" class="btn btn-default" style= "
+                  background-color: #eceaf1;
+                  color: black;
+                  border: 2px solid black;
+                  padding: none;
+                  text-align: center;
+                  text-decoration: none;
+                  display: inline-block;
+                  font-size: 10px;
+                  font-family: Verdana;
+                  border-radius: 8px">
               </div> 
           </form>
+
+          <hr>
+        
+        
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+              <option selected>Choose...</option>
+              <option value="1">Brick</option>
+              <option value="2">Siding</option>
+              <option value="3">Unknown</option>
+            </select>
+          </div>
+
         </div>
 
-        <div class="col-md-offset-2 col-md-8">
-          <div><p><h1>Prediction Result 
-          </h1></p>
-          </div>
+
+        <div class="col-md-8">
+          
           <hr>
-          <div>
+  
               <div class='cont'>
-                <h2><span>{{ data.Best_guess }}</span> 
+                <h4><span>{{ data.Best_guess }}</span> 
                     <br>
                     <br><span>{{ data.Brick }}</span>
                     <br><span>{{ data.Siding }}</span>
-                    <br><span>{{ data.Unknown }}</span></h2>
+                    <br><span>{{ data.Unknown }}</span></h4>
 
                 <!-- upload image to website -->
 
-                <img src="{{url_for('load_image')}}" alt='img'>
+                <img src="{{url_for('load_image')}}" alt='img' style = "
+                  border-radius: 8px;
+                  border: 1px solid rgb(14, 12, 12)">
               </div>
-          </div>
+
         </div>
 
       </div> 
