@@ -17,6 +17,20 @@ import glob
 import streetview
 import itertools
 from config import gkey
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+from sqlalchemy import create_engine
+from datetime import datetime
+
+# # creating a SQL Alchemy ORM
+# engine = create_engine('sqlite:///database/database.sqlite')
+# Base = automap_base()
+# Base.prepare(engine, reflect=True)
+
+# uploaded_images = Base.class.images
+
+
+
 
 ### ADDRESS INPUT ###
 ###########returns model predictions from user address input###########
@@ -30,13 +44,13 @@ def address_form(model, submit_address, FORM_COUNT):
     # submit_address = request.form["address"]
     input_address.append(submit_address)
     
-    time.sleep(1)
+    # time.sleep(1)
 
     address = np.array(input_address)
 
     np.savetxt("static/data/user_address_submit.txt", address, fmt='%5s')
 
-    time.sleep(1)
+    # time.sleep(1)
 
     #this is the first part of the streetview, url up to the address, this url will return a 600x600px image
     pre="https://maps.googleapis.com/maps/api/streetview?size=600x600&location="
@@ -49,11 +63,11 @@ def address_form(model, submit_address, FORM_COUNT):
     suf=f"&key={gkey}&fov=60"
     
     #this is the directory that will store the streetview images
-    dir=r"static/images/address_submit/"
+    directory=r"static/images/address_submit/"
     
-    #checks if the dir variable (output path) above exists and creates it if it does not
-    if not os.path.exists(dir):
-        os.makedirs(dir)
+    #checks if the directory variable (output path) above exists and creates it if it does not
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     
     #opens the address list text file (from the 'text' variable defined above) in read mode ("r")
     with open(text,"r") as text_file:
@@ -66,7 +80,7 @@ def address_form(model, submit_address, FORM_COUNT):
         URL = pre+ln+suf
         
             #creates the filename needed to save each address's streetview image locally
-        filename = os.path.join(dir, "_" + str(ln)+".jpg")
+        filename = os.path.join(directory, "_" + str(ln)+".jpg")
         
         #final step, fetches and saves the streetview image for each address using the url created in the previous steps
         urllib.request.urlretrieve(URL, filename)
@@ -103,19 +117,15 @@ def address_form(model, submit_address, FORM_COUNT):
 
     FORM_COUNT += 1
     
-    return (data, FORM_COUNT)
+    return (data, predictions, best_guess_category, FORM_COUNT)
 
 
 
 ### IMAGE INPUT ###
 ###########returns model predictions from user image upload###########
 
-def image_form(model, request_files, COUNT):
+def image_form(model, image, COUNT):
 
-    new_image = f'static/images/upload_images/{COUNT}.jpg' 
-
-    request_files.save(new_image)
-    image = plt.imread(new_image)
     resized_image = resize(image, (400,400,3))
     data = {}
     predictions = model.predict(np.array([resized_image]))[0]
@@ -129,6 +139,6 @@ def image_form(model, request_files, COUNT):
     
     COUNT += 1
 
-    return (data, COUNT)
+    return (data, predictions, best_guess_category, COUNT)
 
 
