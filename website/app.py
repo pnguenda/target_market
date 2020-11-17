@@ -1,6 +1,5 @@
 from flask import Flask, render_template, \
     request, send_from_directory, redirect, jsonify
-import cv2
 import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, BatchNormalization, Flatten
@@ -20,14 +19,10 @@ import itertools
 from config import gkey
 from my_functions import address_form, image_form
 from PIL import UnidentifiedImageError
+import shutil
 from shutil import copyfile
 from datetime import datetime
-# from sqlalchemy.ext.automap import automap_base
-# from sqlalchemy.orm import Session
-# from sqlalchemy import create_engine
-# import sqlite3
-# import base64
-
+import subprocess
 
 # Image processing model
 
@@ -57,7 +52,12 @@ model.add(Dropout(0.4))
 model.add(Dense(3, activation='softmax'))
 
 model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
-model.load_weights('static/model/final_model.hdf5')
+
+latest_model = glob.glob('static/model/*.hdf5')[0]
+
+print(latest_model)
+
+model.load_weights(latest_model)
 
 
 # Global variables
@@ -115,7 +115,7 @@ def main():
             # return model_predictions from uploaded image
             data, predictions, best_guess_category, COUNT = image_form(model, image, COUNT)
 
-        # save file in new_images_database. File name is determined by:
+        # save file in new_images. File name is determined by:
         #   category of the highest prediction percentage, followed by prediction percentage,
         #   and time stamp (year, month, day, hour, second), and if the file was from an address (API call)
         #   the address is included at the end
@@ -124,11 +124,11 @@ def main():
         
         prediction = str(int(round(100*max(predictions),0)))
 
-        code = {'Brick': '10_', 'Siding': '20_', 'Unknown': '00_'}
+        code = {'Brick': '10', 'Siding': '20', 'Unknown': '00'}
 
-        new_image_name = f'{code[best_guess_category]}{best_guess_category}_{prediction}_{current_time}'
+        new_image_name = f'{code[best_guess_category]}_{best_guess_category}_{prediction}_{current_time}'
         
-        new_image_path = f'new_images_database/{best_guess_category}/{new_image_name}'
+        new_image_path = f'new_images/{best_guess_category}/{new_image_name}'
 
         if IS_ADDRESS == True:
 
@@ -140,6 +140,26 @@ def main():
         
         copyfile(image_upload_path, new_image_path_with_extension)
 
+        for category in os.listdir('new_images'):
+
+            if len(os.listdir('new_images/' + category)) >= 100:
+
+                # for each image category
+
+                for category in os.listdir('new_images'):
+                
+                # move files to corresponding directory in image database
+
+                    for image in os.listdir('new_images/' + category):
+
+                        shutil.move(f'new_images/{category}/{image}', f'image_database/data_for_training_06/{category.lower()}_{code[category]}')
+
+                # run script to create new model
+
+                subprocess.run(['python', 'create_model.py'])
+                
+                break
+                
     else:
 
         data = {'Best_guess': '', 'Brick': '', 'Siding': '', 'Unknown': ''}

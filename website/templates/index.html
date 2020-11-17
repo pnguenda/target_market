@@ -299,7 +299,7 @@
             Tuning the model
           </h3>
           <p>
-            Our model utilizes a convolutional neural network to learn and recognize brick homes. A convolutional neural network (CNN/ConvNet) learns weights and biases from an input image. CNNs have become dominant in various deep learning and computer vision tasks due to their ability to quickly learn spatial hierarchies.
+            Our model utilizes convolutional neural networks to learn and recognize brick homes. A convolutional neural network (CNN/ConvNet) learns weights and biases from an input image. CNNs have become dominant in various deep learning and computer vision tasks due to their ability to quickly learn spatial hierarchies.
           </p>
           <h3>Model Characteristics</h3>
           <hr class="my-4">
@@ -405,8 +405,18 @@
 
       <div class="row">
 
-        <div class="col-md-12">
-          <div><p><h1>Enter a residential address to return an image and ML prediction. </h1></p></div>
+        <hr>
+
+        <div><h3>Enter a residential address or upload an image to return a classification.</h3></div>
+        
+        <hr>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-4">
+
           <hr>
 
             <!-- /* Input Address form */ -->
@@ -418,40 +428,39 @@
                 <input type="submit" id="form-1" value="Submit Address" class="btn btn-default">
             </div>
           </form>
-        </div>
-
-        <div>
-          <div><p><h1>Upload an image of a property. </h1></p></div>
+        
           <hr>
 
           <!-- /* Upload Image form */ -->
 
           <form method="POST" action="/" enctype="multipart/form-data">
               <div class="form-group">
+                  <label for="inputName">Upload an image of a property.</label>
                   <input type="file" multiple name="image" class="btn btn-default"><br><br><br>
                   <input type="submit" id="form-2" value="Submit Image" class="btn btn-default">
               </div> 
           </form>
+
+          <hr>
+        
         </div>
 
-        <div class="col-md-offset-2 col-md-8">
-          <div><p><h1>Prediction Result 
-          </h1></p>
-          </div>
+        <div class="col-md-8">
+          
           <hr>
-          <div>
+  
               <div class='cont'>
-                <h2><span>{{ data.Best_guess }}</span> 
+                <h4><span>{{ data.Best_guess }}</span> 
                     <br>
                     <br><span>{{ data.Brick }}</span>
                     <br><span>{{ data.Siding }}</span>
-                    <br><span>{{ data.Unknown }}</span></h2>
+                    <br><span>{{ data.Unknown }}</span></h4>
 
                 <!-- upload image to website -->
 
                 <img src="{{url_for('load_image')}}" alt='img'>
               </div>
-          </div>
+
         </div>
 
       </div> 
