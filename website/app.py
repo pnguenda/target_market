@@ -1,28 +1,24 @@
 from flask import Flask, render_template, \
-    request, send_from_directory, redirect, jsonify
+    request, send_from_directory, redirect, url_for
 import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, BatchNormalization, Flatten
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage.transform import resize
-#For API CALL ADDRESS SUBMIT
 import urllib.request
-import json
-# Import google_streetview for the api module
 import os
 import google_streetview.api
-import time
 import glob
 import streetview
 import itertools
-from config import gkey
-from my_functions import address_form, image_form
 from PIL import UnidentifiedImageError
 import shutil
 from shutil import copyfile
 from datetime import datetime
 import subprocess
+from my_functions import address_form, image_form
+from config import gkey
 
 # Image processing model
 model = Sequential()
@@ -51,7 +47,7 @@ model.load_weights(latest_model)
 # Global variables to track user submissions to the website
 IMAGE_SUBMIT_COUNT = 0
 ADDRESS_SUBMIT_COUNT = 0
-SUBMISSION_TYPE = None
+SUBMISSION_TYPE = None # value is None, 'address', or 'image'
 
 app = Flask(__name__)
 
@@ -76,6 +72,7 @@ def main():
             SUBMISSION_TYPE = 'address'
 
             submit_address = request.form["address"]
+
             # return model predictions from user address input
             data, predictions, best_guess_category, address = address_form(model, submit_address, ADDRESS_SUBMIT_COUNT)
             image_upload_path = f'static/images/address_submit/{ADDRESS_SUBMIT_COUNT}.jpg'
@@ -93,7 +90,7 @@ def main():
 
                 image = plt.imread(image_upload_path)
 
-            except UnidentifiedImageError:
+            except UnidentifiedImageError: #submit button was clicked but no image was uploaded
 
                 #need to figure out how to redirect to current location on page
                 #https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
@@ -153,7 +150,6 @@ def load_image():
     global SUBMISSION_TYPE
     global ADDRESS_SUBMIT_COUNT
     global IMAGE_SUBMIT_COUNT
-    
 
     if SUBMISSION_TYPE == 'address':
 

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="static/css/style.css">
   </head>
 
   <body>
@@ -425,7 +425,17 @@
             <div class="form-group">
                 <label for="inputName">Address (please enter in the format given below)</label>
                 <input type="text" class="form-control" id="inputName" name="address" placeholder="6257 N Legett Ave Chicago, Illinois 60646">
-                <input type="submit" id="form-1" value="Submit Address" class="btn btn-default">
+                <input type="submit" id="form-1" value="Submit Address" class="btn btn-default" style= "
+                background-color: #eceaf1;
+                color: black;
+                border: 2px solid black;
+                padding: none;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 10px;
+                font-family: Verdana;
+                border-radius: 8px">
             </div>
           </form>
         
@@ -436,14 +446,38 @@
           <form method="POST" action="/" enctype="multipart/form-data">
               <div class="form-group">
                   <label for="inputName">Upload an image of a property.</label>
-                  <input type="file" multiple name="image" class="btn btn-default"><br><br><br>
-                  <input type="submit" id="form-2" value="Submit Image" class="btn btn-default">
+                  <input type="file" multiple name="image" class="btn btn-default" ><br><br><br>
+                  <input type="submit" id="form-2" value="Submit Image" class="btn btn-default" style= "
+                  background-color: #eceaf1;
+                  color: black;
+                  border: 2px solid black;
+                  padding: none;
+                  text-align: center;
+                  text-decoration: none;
+                  display: inline-block;
+                  font-size: 10px;
+                  font-family: Verdana;
+                  border-radius: 8px">
               </div> 
           </form>
 
           <hr>
         
+        
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+              <option selected>Choose...</option>
+              <option value="1">Brick</option>
+              <option value="2">Siding</option>
+              <option value="3">Unknown</option>
+            </select>
+          </div>
+
         </div>
+
 
         <div class="col-md-8">
           
@@ -458,7 +492,9 @@
 
                 <!-- upload image to website -->
 
-                <img src="{{url_for('load_image')}}" alt='img'>
+                <img src="{{url_for('load_image')}}" alt='img' style = "
+                  border-radius: 8px;
+                  border: 1px solid rgb(14, 12, 12)">
               </div>
 
         </div>
