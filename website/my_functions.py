@@ -95,9 +95,8 @@ def address_form(model, submit_address, ADDRESS_SUBMIT_COUNT):
         
     # prepare image for model prediction by first resizing to be consistent with the model
     image = plt.imread(f'static/images/address_submit/{ADDRESS_SUBMIT_COUNT}.jpg')
-    resized_image = resize(image, (400,400,3))
-    
-    # preds = model.predict(np.array([resized_image]))
+   
+    resized_image = resize(image, (500,500,3))
     data = {}
     predictions = model.predict(np.array([resized_image]))[0]
     predictions = list(predictions)
@@ -123,14 +122,20 @@ def address_form(model, submit_address, ADDRESS_SUBMIT_COUNT):
 
 def image_form(model, image):
 
-    resized_image = resize(image, (400,400,3))
+    resized_image = resize(image, (500,500,3))
     data = {}
     predictions = model.predict(np.array([resized_image]))[0]
     predictions = list(predictions)
-    best_guess_index = predictions.index(max(predictions))
+    best_guess_value = max(predictions)
+    best_guess_index = predictions.index(best_guess_value)
     classifications = {0: 'Brick', 1: 'Siding', 2: 'Unknown'}
     best_guess_category = classifications[best_guess_index]
-    data['Best_guess'] = f'The model has identified {best_guess_category}.'
+
+    if best_guess_value >= 0.5:
+        data['Best_guess'] = f'The classification of this property type is: {best_guess_category}.'
+    else:
+        data['Best_guess'] = 'The classification of this property type is: Unknown.'
+
     for i, prediction in enumerate(predictions):
         data[classifications[i]] = f'{classifications[i]}: {round(100*prediction,0)}%'
 

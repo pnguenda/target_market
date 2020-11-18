@@ -22,22 +22,32 @@ from config import gkey
 
 # Image processing model
 model = Sequential()
-model.add(Conv2D(filters=4, kernel_size=2, padding='same',
-                 activation='relu', input_shape=(400, 400, 3)))
+model.add(Conv2D(filters=2, kernel_size=2, padding='same',
+                 activation='relu', input_shape=(500, 500, 3)))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=8, kernel_size=2, padding='same', activation='relu'))
+
+model.add(Conv2D(filters=4, kernel_size=2, padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.1))
-model.add(Conv2D(filters=12, kernel_size=2, padding='same', activation='relu'))
+
+model.add(Conv2D(filters=8, kernel_size=2, padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.2))
-model.add(Conv2D(filters=16, kernel_size=2, padding='same', activation='relu'))
+
+model.add(Conv2D(filters=12, kernel_size=2, padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.3))
+
+model.add(Conv2D(filters=16, kernel_size=2, padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.4))
+
 model.add(Flatten())
 model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.4))
+
 model.add(Dense(3, activation='softmax'))
+
 model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 latest_model = glob.glob('static/model/*.hdf5')[0]
 print(f'\nUsing the following image classification model:\n\n\t{latest_model}.\n')
@@ -113,23 +123,23 @@ def main():
         # copy renamed image file to 'new_images' directory
         copyfile(image_upload_path, new_image_path_with_extension)
 
+        #####this code is part of the smartener and needs the 'image_database' subdirectory in the main directory to run correctly#######
+        # for category in os.listdir('new_images'):
 
-        for category in os.listdir('new_images'):
+        #     if len(os.listdir('new_images/' + category)) >= 100:
 
-            if len(os.listdir('new_images/' + category)) >= 100:
-
-                # for each image category
-                for category in os.listdir('new_images'):
+        #         # for each image category
+        #         for category in os.listdir('new_images'):
                 
-                # move files to corresponding directory in image database
-                    for image in os.listdir('new_images/' + category):
+        #         # move files to corresponding directory in image database
+        #             for image in os.listdir('new_images/' + category):
 
-                        shutil.move(f'new_images/{category}/{image}', f'image_database/data_for_training_06/{category.lower()}_{code[category]}')
+        #                 shutil.move(f'new_images/{category}/{image}', f'image_database/data_for_training_06/{category.lower()}_{code[category]}')
 
-                # run script to create new model
-                subprocess.run(['python', 'create_model.py'])
+        #         # run script to create new model
+        #         subprocess.run(['python', 'create_model.py'])
                 
-                break
+        #         break
                 
     else:
 
